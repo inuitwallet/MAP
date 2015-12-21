@@ -1,6 +1,12 @@
 
 class Accessibility {
 
+	; ###############
+	; ##
+	; ##  Set Variables
+	; ##
+	; ###############
+	
 	static SPI_GETACCESSTIMEOUT := 0x003C
 	static SPI_SETACCESSTIMEOUT := 0x003D
 	static SPI_GETAUDIODESCRIPTION := 0x0074
@@ -49,6 +55,12 @@ class Accessibility {
 	static AUDIODESCRIPTIONSTRUCT_SIZE := 24
 	static HIGHCONTRASTSTRUCT_SIZE := 240
 	
+	; ###############
+	; ##
+	; ##  'private' methods to handle DllCalls
+	; ##
+	; ###############
+		
 	; run the DLL Call for the single param to get the value
 	single_get(uiAction) {
 		if !DllCall("SystemParametersInfo", Uint, uiAction, UInt, 0, UIntP, value, Uint, 0) {
@@ -67,7 +79,7 @@ class Accessibility {
 	
 	; run the Dll Call for a struct to get the values
 	struct_get(uiAction, struct, struct_size) {
-		DllCall("SystemParametersInfo", UInt, uiAction, UInt, struct_size, Ptr, &struct, Uint, 0)
+		DllCall("SystemParametersInfo", UInt, uiAction, UInt, struct_size, Ptr, struct[""], Uint, 0)
 		;MsgBox % ErrorLevel		
 		return struct
 	}
@@ -78,18 +90,167 @@ class Accessibility {
 		return "SUCCESS"
 	}
 	
+	; ###############
+	; ##
+	; ##  Methods that use a Boolean
+	; ##
+	; ###############
+	
+	; get Determines whether animations are enabled or disabled. 
+	; set Turns client area animations on or off.
+	; Windows Server 2003 and Windows XP/2000:  This parameter is not supported.
+	ClientAreaAnimation {
+		get {
+			return this.single_get(this.SPI_GETCLIENTAREAANIMATION)
+		}
+		set {
+			return this.single_set(this.SPI_SETCLIENTAREAANIMATION, value)
+		}
+	}
+	
+	; get Determines whether overlapped content is enabled or disabled.
+	; set Turns overlapped content (such as background images and watermarks) on or off. 
+	; Windows Server 2003 and Windows XP/2000:  This parameter is not supported.
+	DisableOverlappedContent {
+		get {
+			return this.single_get(this.SPI_GETDISABLEOVERLAPPEDCONTENT)
+		}
+		set {
+			return this.single_set(this.SPI_SETDISABLEOVERLAPPEDCONTENT, value)
+		}
+	}
+	
+	; get Retrieves the state of the Mouse ClickLock feature
+	; Windows 2000:  This parameter is not supported.
+	MouseClickLock {
+		get {
+			return this.single_get(this.SPI_GETMOUSECLICKLOCK)
+		}
+		set {
+			return this.single_set(this.SPI_SETMOUSECLICKLOCK, value)
+		}
+	}
+	
+	; get Retrieves the state of the Mouse Sonar feature.
+	; Windows 2000:  This parameter is not supported.
+	MouseSonar {
+		get {
+			return this.single_get(this.SPI_GETMOUSESONAR)
+		}
+		set {
+			return this.single_set(this.SPI_SETMOUSESONAR, value)
+		}
+	}
+	
+	; get Retrieves the state of the Mouse Vanish feature
+	; Windows 2000:  This parameter is not supported.
+	MouseVanish {
+		get {
+			return this.single_get(this.SPI_GETMOUSEVANISH)
+		}
+		set {
+			return this.single_set(this.SPI_SETMOUSEVANISH, value)
+		}
+	}
+	
+	; get Determines whether a screen reviewer utility is running.
+	; Note  Narrator, the screen reader that is included with Windows, 
+	; does not set the SPI_SETSCREENREADER or SPI_GETSCREENREADER flags.
+	ScreenReader {
+		get {
+			return this.single_get(this.SPI_GETSCREENREADER)
+		}
+		set {
+			return this.single_set(this.SPI_SETSCREENREADER, value)
+		}
+	}
+	
+	; get Determines whether the Show Sounds accessibility flag is on or off
+	
+	ShowSounds {
+		get {
+			return this.single_get(this.SPI_GETSHOWSOUNDS)
+		}
+		set {
+			return this.single_set(this.SPI_SETSHOWSOUNDS, value)
+		}
+	}
+	
+	; ###############
+	; ##
+	; ##  Methods that use a UInt 
+	; ##
+	; ###############
+	
+	; get Retrieves the height, in pixels, of the top and bottom edges of the focus rectangle drawn with DrawFocusRect.
+	; set Sets the height of the top and bottom edges of the focus rectangle drawn with DrawFocusRect to the value of the pvParam parameter.
+	; Windows 2000:  This parameter is not supported.
+	FocusBorderHeight {
+		get {
+			return this.single_get(this.SPI_GETFOCUSBORDERHEIGHT)
+		}
+		set {
+			return this.single_set(this.SPI_SETFOCUSBORDERHEIGHT, value)
+		}
+	}
+	
+	; get Retrieves the width, in pixels, of the left and right edges of the focus rectangle drawn with DrawFocusRect. 
+	; Windows 2000:  This parameter is not supported.
+	FocusBorderWidth {
+		get {
+			return this.single_get(this.SPI_GETFOCUSBORDERWIDTH)
+		}
+		set {
+			return this.single_set(this.SPI_SETFOCUSBORDERWIDTH, value)
+		}
+	}
+	
+	; get Retrieves the time that notification pop-ups should be displayed, in seconds
+	; Windows Server 2003 and Windows XP/2000:  This parameter is not supported.
+	MessageDuration {
+		get {
+			return this.single_get(this.SPI_GETMESSAGEDURATION)
+		}
+		set {
+			return this.single_set(this.SPI_SETMESSAGEDURATION, value)
+		}
+	}
+	
+	; get Retrieves the time delay before the primary mouse button is locked
+	; Windows 2000:  This parameter is not supported.
+	MouseClickLockTime {
+		get {
+			return this.single_get(this.SPI_GETMOUSECLICKLOCKTIME)
+		}
+		set {
+			return this.single_set(this.SPI_SETMOUSECLICKLOCKTIME, value)
+		}
+	}
+	
+	; ###############
+	; ##
+	; ##  Methods that use a struct 
+	; ##
+	; ###############
+	
+	
 	build_highcontrast_struct() {
-		; UINT   cbSize; 4
-		; DWORD  dwFlags; 4
-		; LPTSTR lpszDefaultScheme; 16
-		VarSetCapacity(HCS, this.HIGHCONTRASTSTRUCT_SIZE, 0)
-		NumPut(this.HIGHCONTRASTSTRUCT_SIZE, HCS, 0, "UInt")
+		struct := "
+		(
+		UINT cbSize;
+		DWORD dwFlags;
+		LPTSTR lpszDefaultScheme;
+		)"
+		HCS := new _struct(struct)
+		HCS.cbSize := sizeof(HCS)
 		return HCS
 	}
 	
 	HighContrast {
 		get {
-			struct := this.struct_get(this.SPI_GETHIGHCONTRAST, this.build_highcontrast_struct(), this.HIGHCONTRASTSTRUCT_SIZE)
+			;test := this.build_highcontrast_struct()
+			;MsgBox % test.AhkType(dwFlags)
+			struct := this.struct_get(this.SPI_GETHIGHCONTRAST, this.build_highcontrast_struct(), sizeof(HCS))
 			MsgBox % "cbSize = " + NumGet(&struct + 0, "UInt")
 			MsgBox % "dwFlags = " + NumGet(&struct + 4, "UInt")
 			MsgBox % "lpszDefaultScheme = " + StrGet(&struct + 8, "UItn")
@@ -125,41 +286,6 @@ class Accessibility {
 			this.struct_set(this.SPI_SETAUDIODESCRIPTION, struct, this.AUDIODESCRIPTIONSTRUCT_SIZE)
 		}
 	}
-	
-	; get Retrieves the height, in pixels, of the top and bottom edges of the focus rectangle drawn with DrawFocusRect.
-	; set Sets the height of the top and bottom edges of the focus rectangle drawn with DrawFocusRect to the value of the pvParam parameter.
-	; Windows 2000:  This parameter is not supported.
-	FocusBorderHeight {
-		get {
-			return this.single_get(this.SPI_GETFOCUSBORDERHEIGHT)
-		}
-		set {
-			return this.single_set(this.SPI_SETFOCUSBORDERHEIGHT, value)
-		}
-	}
-	
-	; get Determines whether overlapped content is enabled or disabled.
-	; set Turns overlapped content (such as background images and watermarks) on or off. 
-	; Windows Server 2003 and Windows XP/2000:  This parameter is not supported.
-	DisableOverlappedContent {
-		get {
-			return this.single_get(this.SPI_GETDISABLEOVERLAPPEDCONTENT)
-		}
-		set {
-			return this.single_set(this.SPI_SETDISABLEOVERLAPPEDCONTENT, value)
-		}
-	}
-	
-	; get Determines whether animations are enabled or disabled. 
-	; set Turns client area animations on or off.
-	; Windows Server 2003 and Windows XP/2000:  This parameter is not supported.
-	ClientAreaAnimation {
-		get {
-			return this.single_get(this.SPI_GETCLIENTAREAANIMATION)
-		}
-		set {
-			return this.single_set(this.SPI_SETCLIENTAREAANIMATION, value)
-		}
-	}
+		
 }
 

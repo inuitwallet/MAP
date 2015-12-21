@@ -4,6 +4,7 @@ SendMode Input  ; Recommended for new scripts due to its superior speed and reli
 SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 
 #Include accessibility.ahk
+#Include <_struct>
 
 
 ac := new Accessibility
@@ -20,6 +21,10 @@ ac := new Accessibility
 ;ac.FocusBorderHeight := 200
 ;MsgBox % "FocusBorderHeight = " + ac.FocusBorderHeight
 
+;MsgBox % "MouseSonar = " + ac.MouseSonar
+;ac.MouseSonar := !ac.MouseSonar
+;MsgBox % "MouseSonar = " + ac.MouseSonar
+
 MsgBox % ac.HighContrast
-;ac.AudioDescription := 1
-;MsgBox % ac.AudioDescription
+ac.AudioDescription := 1
+MsgBox % ac.AudioDescription
