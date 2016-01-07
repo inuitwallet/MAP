@@ -1,6 +1,9 @@
 
 class Accessibility {
 
+	; use the Accessibility APi
+	; https://msdn.microsoft.com/en-us/library/windows/desktop/ms724947(v=vs.85).aspx
+
 	; ###############
 	; ##
 	; ##  Set Variables
