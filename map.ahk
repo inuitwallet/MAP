@@ -66,19 +66,19 @@ ApplyMapSettings:
 	Gui, MAPLocationChoice:Font, s30 ccd9000
 	Gui, MAPLocationChoice:Add, Text, w510 Center, MAP settings Location
 	Gui, MAPLocationChoice:Font, s25
-	Gui, MAPLocationChoice:Add, Picture, xs Section w250 h250 gMapPortal Border, img\map_portal.png
+	Gui, MAPLocationChoice:Add, Picture, xs Section w250 h250 gMapPortalApply Border, img\map_portal.png
 	Gui, MAPLocationChoice:Add, Text, xs y+-70 w250 BackgroundTrans Center, MAP Portal
 	Gui, MAPLocationChoice:Add, Picture, ys Section w250 h250 Border, img\pen_drive.png
 	Gui, MAPLocationChoice:Add, Text, xs y+-70 w250 BackgroundTrans Center, USB Stick
 	Gui, MAPLocationChoice:Show, AutoSize, MAP Settings
 	Return
 	
-MapPortal:
+MapPortalApply:
 	;MsgBox, 4161, Map Portal, This will overwrite any settings you currently have saved.
 	;IfMsgBox, Cancel 
 	;	Return
 	Gui, MAPLocationChoice: Hide
-	in := PortalLogin()
+	in := PortalLogin("apply")
 	Return
 
 	
