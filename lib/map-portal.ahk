@@ -9,7 +9,7 @@ GetPortalUrl() {
 	Return PortalUrl
 }
 
-PortalLogin() {
+PortalLogin(action) {
 	; Display a UI and allow the user to enter user name and password. 
 	; This in turn logs them into the portal and downloads their profile
 	global Username, Password
@@ -20,11 +20,11 @@ PortalLogin() {
 	Gui, PortalLogin:Font, s25
 	Gui, PortalLogin:Add, Text, w500, Username
 	Gui, PortalLogin:Font, cBlack
-	Gui, PortalLogin:Add, Edit, w500 vUsername, sammoth
+	Gui, PortalLogin:Add, Edit, w500 vUsername
 	Gui, PortalLogin:Font, ccd9000
 	Gui, PortalLogin:Add, Text, w500, Password 
 	Gui, PortalLogin:Font, cBlack
-	Gui, PortalLogin:Add, Edit, w500 vPassword password, s4mm0th#?]
+	Gui, PortalLogin:Add, Edit, w500 vPassword password
 	Gui, PortalLogin:Add, Button, w90 Section, Cancel
 	Gui, PortalLogin:Add, Button, w300 ys Default, Login
 	Gui, PortalLogin:Font, s20 underline
@@ -47,9 +47,12 @@ PortalLogin() {
 			Gui, PortalLogin:Show
 			Return
 		}
-		apply := ApplyProfile(profile) 
-		Gui, Main:Show
-		MsgBox, 0, MAP, Your MAP settings have been applied, 2 
+		if (action == "apply")
+		{
+			apply := ApplyProfile(profile) 
+			Gui, Main:Show
+			MsgBox, 0, MAP, Your MAP settings have been applied, 2 
+		}
 		Return
 	
 	SignUp:
