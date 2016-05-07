@@ -14,3 +14,14 @@ get_pc_ident() {
 	PC_ident_string := A_UserName . A_ComputerName . A_OSType . A_OSVersion . A_IPAddress1
 	return MD5(PC_ident_string, StrLen(PC_ident_string))
 }
+
+portal_to_map(string) {
+	; convert a string from the snake case used on the portal to the pseudo camelCase used in the Accessibiltiy class
+	sub := StrSplit(string, "_")
+	Output_String = 
+	for substring in sub 
+	{
+		Output_String .= Format("{:T}", sub[substring])
+	}
+	return Output_String
+}
