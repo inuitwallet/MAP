@@ -47,7 +47,7 @@ PortalLogin(action) {
 			Gui, PortalLogin:Show
 			Return
 		}
-		if (action == "apply")
+		if (action = apply)
 		{
 			apply := ApplyProfile(profile) 
 			Gui, Main:Show
@@ -88,9 +88,7 @@ ApplyProfile(profile) {
 	osk := new OnScreenKeyboard
 	ac.MouseSonar := profile.mouse_sonar
 	ac.ShowSounds := profile.show_sounds
-	MsgBox % ac.FocusBorderHeight
 	ac.FocusBorderHeight := profile.focus_border
-	MsgBox % ac.FocusBorderHeight
 	ac.FocusBorderWidth := profile.focus_border
 	mag.magnify(profile.magnifier)
 	osk.onscreen(profile.on_screen_keyboard)
