@@ -75,14 +75,10 @@ PortalLogin(action) {
 
 FixProfile(profile) {
 	; alter some values
-	for key, value in profile
-		Msgbox % key . " " . value
 	for key, value in profile {
 		if value = -1
 			profile[key] := 1
 	}
-	for key, value in profile
-		Msgbox % key . " " . value
 }
 
 GetProfileUrl(Username, Password) {
