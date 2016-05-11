@@ -8,13 +8,17 @@ class Magnifier {
 		else {
 			while WinExist("ahk_exe Magnify.exe") {
 				WinKill, ahk_exe Magnify.exe
+				Sleep 500 
 			}
 		}
 	}
 	
 	present {
 		get {
-			return WinExist("ahk_exe Magnify.exe")
+			if WinExist("ahk_exe Magnify.exe")
+				return 1
+			else
+				return 0
 		}
 	}
 	

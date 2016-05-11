@@ -8,13 +8,17 @@ class OnScreenKeyboard {
 		else {
 			while WinExist("ahk_exe osk.exe") {
 				WinKill, ahk_exe osk.exe
+				sleep 500 
 			}
 		}
 	}
 	
 	present {
 		get {
-			return WinExist("ahk_exe osk.exe")
+			if WinExist("ahk_exe osk.exe")
+				return 1
+			else
+				return 0			
 		}
 	}
 	
